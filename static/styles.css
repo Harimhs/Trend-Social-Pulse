@@ -1,0 +1,42 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    color: #fff;
+    margin: 0;
+    padding: 30px;
+    text-align: center;
+}
+
+input, select, button {
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    margin: 5px;
+}
+
+button {
+    background-color: #1c87c9;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #155d8b;
+}
+
+.zoom-button {
+    padding: 15px 30px;
+    font-size: 1.5em;
+    font-weight: bold;
+    background: linear-gradient(to right, #4a37da, #05002b);
+    color: #f8f8f8;
+    margin-top: 400px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.zoom-button:hover {
+    background: linear-gradient(to right, #8ddfed, #02365f);
+}

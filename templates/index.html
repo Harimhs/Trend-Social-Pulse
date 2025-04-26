@@ -2,185 +2,107 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Trend Pulse</title>
+    <title>Trend Pulse Explorer</title>
     <style>
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
             margin: 0;
-            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            background: linear-gradient(to right, #080048b2, #05002b); /* Gradient background */
-            background-size: contain;
+            padding: 0;
+            background: linear-gradient(to right, #1f1c2c, #928dab);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #fff;
-            transition: transform 0.5s ease-in-out;
         }
-        h1 {
-            margin-top: 20px;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-        }
+
         .container {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            width: 300px;
+            max-width: 600px;
+            margin: 5% auto;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
             text-align: center;
-            animation: fadeIn 1s ease-in-out;
+            margin-bottom: 30px;
+            font-size: 2.2rem;
         }
-        #choice {
-            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            color: #05002b;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        form {
-            margin-bottom: 20px;
-        }
-        label, select, input {
+
+        label {
             display: block;
-            margin: 10px 0;
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-            font-size: 1em;
+            margin: 15px 0 5px;
+            font-weight: bold;
+            color: #f0f0f0;
         }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
         button {
-            padding: 10px;
-            background-color: #345597;
-            color: white;
-            border: none;
-            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 4px;
             width: 100%;
-            font-size: 1em;
-            transition: background-color 0.3s ease-out;
-        }
-        button:hover {
-            background-color: #156b93;
-        }
-        .hidden {
-            display: none;
-        }
-        #resultsContainer {
-            margin-top: 10px;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            width: 300px;
-            text-align: center;
-            animation: fadeIn 1s ease-in-out;
-        }
-        #resultText {
-            margin-bottom: 20px;
-            font-size: 1.1em;
-            color: #333;
-        }
-        #backButton {
-            padding: 10px;
-            background-color: #140451;
-            color: white;
+            padding: 12px;
             border: none;
-            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            font-weight: bold;
+            border-radius: 5px;
+            background-color: #4caf50;
+            color: white;
+            font-size: 1rem;
             cursor: pointer;
-            border-radius: 4px;
-            width: 100%;
-            margin-top: 20px;
-            font-size: 1em;
             transition: background-color 0.3s ease;
+            margin-top: 20px;
         }
-        #resultPlot {
-            max-width: 100%;
-            margin: auto;
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        img {
             display: block;
-        }
-        #backButton:hover {
-            background-color: #046087;
+            margin: 20px auto;
+            border-radius: 8px;
+            max-width: 100%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
     </style>
 </head>
 <body>
-    <h1>TREND PULSE ANALYSIS</h1>
-    <div id="mainContainer" class="container">
-        <form id="sentimentForm">
-            <label for="choice" style="color: #05002b;">Input:</label>
-            <select id="choice" name="choice" onchange="showExtraInput()">
-                <option value="1">Overall Sentiment Percentages</option>
-                <option value="2">Sentiment Percentages by User Timezone</option>
-                <option value="3">Sentiment Percentages by Tweet Location</option>
-                <option value="4">Sentiment Percentages by Airline</option>
-                <option value="5">Predict Sentiment for a Text</option>
+    <div class="container">
+        <h1>Trend Pulse Explorer</h1>
+
+        <form method="POST">
+            <label for="product">Product Keyword:</label>
+            <input type="text" id="product" name="product" required>
+
+            <label for="year">Year:</label>
+            <input type="text" id="year" name="year" required>
+
+            <label for="option">Choose Analysis Option:</label>
+            <select id="option" name="option" required>
+                <option value="1">Overall Sentiment Distribution</option>
+                <option value="2">Monthly Sentiment Trend</option>
+                <option value="3">Monthly Peak Product Mentions</option>
+                <option value="4">Best Performing Period</option>
+                <option value="5">Worst Performing Period</option>
             </select>
-            <div id="extraInputContainer" class="hidden">
-                <label for="extraInput" style="color: #05002b;">Enter Value:</label>
-                <input type="text" id="extraInput" name="extra_input">
-            </div>
-            <button type="submit">Submit</button>
+
+            <button type="submit">Analyze</button>
         </form>
+
+        {% if result %}
+            <h2>{{ result }}</h2>
+            {% if image %}
+                <img src="{{ image }}" alt="Sentiment Analysis Graph">
+            {% endif %}
+        {% endif %}
     </div>
-    <div id="resultsContainer" class="hidden container">
-        <h2 style="color: #05002b;">Results</h2>
-        <p id="resultText"></p>
-        <img id="resultPlot" src="" alt="Sentiment Distribution" class="hidden">
-        <button id="backButton" onclick="goBack()">Back</button>
-    </div>
-    <script>
-        function showExtraInput() {
-            const choice = document.getElementById('choice').value;
-            const extraInputContainer = document.getElementById('extraInputContainer');
-            if (choice === '2' || choice === '3' || choice === '4' || choice === '5') {
-                extraInputContainer.classList.remove('hidden');
-            } else {
-                extraInputContainer.classList.add('hidden');
-            }
-        }
-
-        document.getElementById('sentimentForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
-            const form = new FormData(this);
-            const response = await fetch('/analyze', {
-                method: 'POST',
-                body: form
-            });
-            const data = await response.json();
-            const resultsContainer = document.getElementById('resultsContainer');
-            const resultText = document.getElementById('resultText');
-            const resultPlot = document.getElementById('resultPlot');
-            const mainContainer = document.getElementById('mainContainer');
-
-            if (form.get('choice') === '5') {
-                resultText.textContent = `Predicted Sentiment: ${data.sentiment}`;
-                resultPlot.classList.add('hidden');
-            } else {
-                resultText.innerHTML = `
-                    Positive Tweets Percentage: ${data.positive_percentage.toFixed(2)}%<br>
-                    Negative Tweets Percentage: ${data.negative_percentage.toFixed(2)}%<br>
-                    Neutral Tweets Percentage: ${data.neutral_percentage.toFixed(2)}%
-                `;
-                resultPlot.src = `data:image/png;base64,${data.plot_url}`;
-                resultPlot.classList.remove('hidden');
-            }
-            resultsContainer.classList.remove('hidden');
-            mainContainer.classList.add('hidden');
-        });
-
-        function goBack() {
-            const resultsContainer = document.getElementById('resultsContainer');
-            const mainContainer = document.getElementById('mainContainer');
-
-            resultsContainer.classList.add('hidden');
-            mainContainer.classList.remove('hidden');
-        }
-    </script>
 </body>
 </html>
