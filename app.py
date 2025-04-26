@@ -17,7 +17,7 @@ def index():
             result, image_path = fetch_and_analyze_data(product, year, option)
             context = {
                 "result": result,
-                "image": image_path,
+                "image_url": image_path,
                 "product": product,
                 "year": year,
                 "selected_option": option
