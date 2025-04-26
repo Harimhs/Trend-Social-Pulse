@@ -6,9 +6,10 @@ import pandas as pd
 import praw
 from textblob import TextBlob
 
-CLIENT_ID = 'YsPTwh7o1-vOACORuZ_KGg'
-CLIENT_SECRET = 'bvzxzn1qUvwawTpZW1CAZpGdOWil1g'
-USER_AGENT = 'TrendPulseExplorerApp'
+CLIENT_ID = os.getenv('CLIENT_ID')
+CLIENT_SECRET = os.getenv('CLIENT_SECRET')
+USER_AGENT = os.getenv('USER_AGENT')
+
 
 reddit = praw.Reddit(client_id=CLIENT_ID,
                      client_secret=CLIENT_SECRET,
