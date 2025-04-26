@@ -99,8 +99,8 @@
 
         {% if result %}
             <h2>{{ result }}</h2>
-            {% if image %}
-                <img src="{{ image }}" alt="Sentiment Analysis Graph">
+            {% if image_url %}
+                <img src="{{ image_url }}" alt="Sentiment Graph" style="max-width: 100%; height: auto;">
             {% endif %}
         {% endif %}
     </div>
