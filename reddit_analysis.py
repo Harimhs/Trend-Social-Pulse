@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import praw
 from textblob import TextBlob
+import cloudinary.uploader
 
 CLIENT_ID = os.getenv('CLIENT_ID')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
@@ -51,9 +52,6 @@ def fetch_reddit_data(product, year):
     return df
 
 def generate_graph(data, product, year, option):
-    filename = f"{uuid.uuid4().hex}.png"
-    filepath = os.path.join("static", "plots", filename)
-
     plt.figure(figsize=(10, 6))
 
     if option == "1":
@@ -86,14 +84,18 @@ def generate_graph(data, product, year, option):
         plt.axis('off')
 
     plt.tight_layout()
-    plt.savefig(filepath)
+    tmp_file = f"/tmp/{uuid.uuid4().hex}.png"
+    plt.savefig(tmp_file)
     plt.clf()
-    return filename
 
+    upload_result = cloudinary.uploader.upload(tmp_file)
+    return upload_result['secure_url']
+  
 def fetch_and_analyze_data(product, year, option):
     df = fetch_reddit_data(product, year)
     if df.empty:
         raise ValueError("No data found for the given product and year.")
 
-    image_filename = generate_graph(df, product, year, option)
-    return f"Analysis complete for {product} in {year}.", f"/static/plots/{image_filename}"
+    image_url = generate_graph(df, product, year, option)
+    return f"Analysis complete for {product} in {year}.", image_url
+
